@@ -1,0 +1,12 @@
+{
+    "menus": {
+        "title_screen": "_____________________________________________________  \n|  #########################            _.._  __     | \n|   Welcome to the Text RPG         .--{    }/  \"~-._| \n|  #########################       /    ^++^/      / | \n|        ${o3} - Play -               {        (0     /  | \n|                                  \\=.___ .//\\___+\"  | \n|                                  \\   .//'     /    | \n|        ${o2} - Help -                )  _//'    _(     | \n|                                  (HHHHH[]HHHH)     | \n|                                  / \\   ..  / \\     | \n|        ${o1} - Quit -              /   }  .. {    \\    | \n|                                 ^+._/\\ .. /\\_.+^   | \n|        copyright 2020                 \\__/         | \n|____________________________________________________| \n",
+        "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse up down left right to move\n           \nType commands to use them\n                \nUse \"look\" to inspect\n                    \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",
+        "seed_prompt": "If you have a seed, enter it now, otherwise press enter:"
+    },
+    "player": {
+        "health": 100,
+        "stamina": 100,
+        "inventory": []
+    }
+}
