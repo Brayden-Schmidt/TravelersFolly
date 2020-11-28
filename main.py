@@ -1,3 +1,9 @@
+# Open Git Bash
+# cd  ~/Documents/VSCODE/MIDPROCESS/TravelersFolly
+# git add .
+# git commit -m "<your message here>"
+# git push origin develop
+
 # Path: C:\Users\blsfu\Documents\VSCODE\MIDPROCESS\TravelersFolly
 # Unicode guide: http://www.fileformat.info/info/charset/UTF-8/list.htm
 # Start file -> Display start menu -> Select option (play) -> Prompt for seed -> Generate map -> Process player input -> Move/Interact  # noqa:E501
@@ -44,13 +50,18 @@ def init_db():
     db = {
         "menus": {
             "title_screen": "_____________________________________________________  \n|  #########################            _.._  __     | \n|   Welcome to the Text RPG         .--{    }/  \"~-._| \n|  #########################       /    ^++^/      / | \n|        ${o3} - Play -               {        (0     /  | \n|                                  \\=.___ .//\\___+\"  | \n|                                  \\   .//'     /    | \n|        ${o2} - Help -                )  _//'    _(     | \n|                                  (HHHHH[]HHHH)     | \n|                                  / \\   ..  / \\     | \n|        ${o1} - Quit -              /   }  .. {    \\    | \n|                                 ^+._/\\ .. /\\_.+^   | \n|        copyright 2020                 \\__/         | \n|____________________________________________________| \n",  # noqa: E501
-            "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse up down left right to move\n           \nType commands to use them\n                \nUse \"look\" to inspect\n                    \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",  # noqa: E501
+            "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse w, a, s d to move\n           \nType e to selct or q to go back\n                \nUse \"`\"\n to enter debug mode                   \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",  # noqa: E501
             "seed_prompt": "If you have a seed, enter it now, otherwise press enter:"  # noqa: E501
         },
         "player": {
             "health": 100,
             "stamina": 100,
             "inventory": []
+        },
+        "templates": {
+            "mountain": "",
+            "river": "",
+            "town": ""
         }
     }
 
@@ -63,6 +74,12 @@ class SceneStates(Enum):
     help_screen = 1
     game = 2
     seed_prompt = 3
+
+
+class StructuresEnum(Enum):
+    mountain = 0
+    river = 1
+    town = 2
 
 
 class World:
@@ -136,7 +153,8 @@ class World:
 
             for i in range(50):
                 self.add_random_enemy()
-
+            for i in range(50):
+                self.add_random_mountain()
             self.scene_state = SceneStates.game
         elif self.scene_state == SceneStates.help_screen:
             if option == 'q':
@@ -181,6 +199,13 @@ class World:
         enemy = Enemy(f'enemy_{self.entity_index}', 20, 2, random_pos, '\u029b', self.entity_index)  # noqa:E501
         self.entity_display_map[str(self.entity_index)] = enemy.get_display_char()  # noqa:E501
         self.entities.append(enemy)  # noqa:E501
+        self.entity_index += 1
+
+    def add_random_mountain(self):
+        random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
+        mountain = Structure(f'mountain_{self.entity_index}', '', StructuresEnum.mountain, random_pos, '\u005e', self.entity_index)  # noqa:E501
+        self.entity_display_map[str(self.entity_index)] = mountain.get_display_char()  # noqa:E501
+        self.entities.append(mountain)  # noqa:E501
         self.entity_index += 1
 
     def detect_world_bounds_collision(self, entity):
@@ -358,7 +383,17 @@ class Enemy(Entity):
 
 
 class Structure(Entity):
-    pass
+    def __init__(self, name, description, structure_type, position, display_char, matrix_index):  # noqa: E501
+        Entity.__init__(self, name, display_char, position, matrix_index)  # <<< IMPORTANT # noqa: E501
+        self.jso = JSONOps('db.json')
+        db = self.jso.read()
+        if structure_type == StructuresEnum.mountain:
+            db[name] = db['templates']['mountain']
+        if structure_type == StructuresEnum.river:
+            db[name] = db['templates']['river']
+        if structure_type == StructuresEnum.town:
+            db[name] = db['templates']['town']
+        self.jso.write(db)
 
 
 world = World(world_size=[50, 50], window_size=[10, 10], window_pos=[0, 0], debug=False)  # noqa: E501

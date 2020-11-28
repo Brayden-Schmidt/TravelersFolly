@@ -1,12 +1,212 @@
 {
     "menus": {
         "title_screen": "_____________________________________________________  \n|  #########################            _.._  __     | \n|   Welcome to the Text RPG         .--{    }/  \"~-._| \n|  #########################       /    ^++^/      / | \n|        ${o3} - Play -               {        (0     /  | \n|                                  \\=.___ .//\\___+\"  | \n|                                  \\   .//'     /    | \n|        ${o2} - Help -                )  _//'    _(     | \n|                                  (HHHHH[]HHHH)     | \n|                                  / \\   ..  / \\     | \n|        ${o1} - Quit -              /   }  .. {    \\    | \n|                                 ^+._/\\ .. /\\_.+^   | \n|        copyright 2020                 \\__/         | \n|____________________________________________________| \n",
-        "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse up down left right to move\n           \nType commands to use them\n                \nUse \"look\" to inspect\n                    \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",
+        "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse w, a, s d to move\n           \nType e to selct or q to go back\n                \nUse \"`\"\n to enter debug mode                   \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",
         "seed_prompt": "If you have a seed, enter it now, otherwise press enter:"
     },
     "player": {
         "health": 100,
         "stamina": 100,
         "inventory": []
+    },
+    "enemy_1": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_2": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_3": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_4": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_5": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_6": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_7": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_8": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_9": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_10": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_11": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_12": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_13": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_14": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_15": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_16": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_17": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_18": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_19": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_20": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_21": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_22": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_23": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_24": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_25": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_26": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_27": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_28": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_29": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_30": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_31": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_32": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_33": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_34": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_35": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_36": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_37": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_38": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_39": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_40": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_41": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_42": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_43": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_44": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_45": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_46": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_47": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_48": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_49": {
+        "health": 20,
+        "strength": 2
+    },
+    "enemy_50": {
+        "health": 20,
+        "strength": 2
     }
 }
