@@ -26,6 +26,7 @@ import random
 from string import Template
 from os import system, name
 from enum import Enum
+from colorama import Fore
 
 
 def clear():
@@ -50,7 +51,7 @@ def init_db():
     db = {
         "menus": {
             "title_screen": "_____________________________________________________  \n|  #########################            _.._  __     | \n|   Welcome to the Text RPG         .--{    }/  \"~-._| \n|  #########################       /    ^++^/      / | \n|        ${o3} - Play -               {        (0     /  | \n|                                  \\=.___ .//\\___+\"  | \n|                                  \\   .//'     /    | \n|        ${o2} - Help -                )  _//'    _(     | \n|                                  (HHHHH[]HHHH)     | \n|                                  / \\   ..  / \\     | \n|        ${o1} - Quit -              /   }  .. {    \\    | \n|                                 ^+._/\\ .. /\\_.+^   | \n|        copyright 2020                 \\__/         | \n|____________________________________________________| \n",  # noqa: E501
-            "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse w, a, s d to move\n           \nType e to selct or q to go back\n                \nUse \"`\"\n to enter debug mode                   \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",  # noqa: E501
+            "help": "############################               \n#       -HELP -          #\n############################               \n                                           \nUse w, a, s d to move\n           \nType e to selct or q to go back\n                \nUse \"`\" to enter debug mode                   \nAnd most importantly be careful out there\n\npress \"q\" to go back ---->\n",  # noqa: E501
             "seed_prompt": "If you have a seed, enter it now, otherwise press enter:"  # noqa: E501
         },
         "player": {
@@ -60,6 +61,8 @@ def init_db():
         },
         "templates": {
             "mountain": "",
+            "forest": "",
+            "desert": "",
             "river": "",
             "town": ""
         }
@@ -78,8 +81,10 @@ class SceneStates(Enum):
 
 class StructuresEnum(Enum):
     mountain = 0
-    river = 1
-    town = 2
+    forest = 1
+    desert = 2
+    river = 3
+    town = 4
 
 
 class World:
@@ -150,11 +155,26 @@ class World:
                 random.seed(generated_seed)
             self.seed = generated_seed
             self.add_player()
+            # pg = proportional generation fg = final generation tg = town generation # noqa:E501
+            pg = 0
+            fg = 0
+            tg = 0
 
-            for i in range(50):
+            pg = int(self.world_size[0])
+            fg += pg * 2
+            tg = int(self.world_size[0] / 5)
+            for i in range(fg):
                 self.add_random_enemy()
-            for i in range(50):
+            for i in range(fg):
                 self.add_random_mountain()
+            for i in range(fg):
+                self.add_random_forest()
+            for i in range(fg):
+                self.add_random_desert()
+            for i in range(fg):
+                self.add_random_river()
+            for i in range(tg):
+                self.add_random_town()
             self.scene_state = SceneStates.game
         elif self.scene_state == SceneStates.help_screen:
             if option == 'q':
@@ -196,16 +216,44 @@ class World:
 
     def add_random_enemy(self):
         random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
-        enemy = Enemy(f'enemy_{self.entity_index}', 20, 2, random_pos, '\u029b', self.entity_index)  # noqa:E501
+        enemy = Enemy(f'enemy_{self.entity_index}', 20, 2, random_pos, Fore.RED + '\u029b' + Fore.WHITE, self.entity_index)  # noqa:E501
         self.entity_display_map[str(self.entity_index)] = enemy.get_display_char()  # noqa:E501
         self.entities.append(enemy)  # noqa:E501
         self.entity_index += 1
 
     def add_random_mountain(self):
         random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
-        mountain = Structure(f'mountain_{self.entity_index}', '', StructuresEnum.mountain, random_pos, '\u005e', self.entity_index)  # noqa:E501
+        mountain = Structure(f'mountain_{self.entity_index}', '', StructuresEnum.mountain, random_pos, Fore.LIGHTMAGENTA_EX + 'M' + Fore.WHITE, self.entity_index)  # noqa:E501
         self.entity_display_map[str(self.entity_index)] = mountain.get_display_char()  # noqa:E501
         self.entities.append(mountain)  # noqa:E501
+        self.entity_index += 1
+
+    def add_random_forest(self):
+        random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
+        forest = Structure(f'forest_{self.entity_index}', '', StructuresEnum.forest, random_pos, Fore.GREEN + 'F' + Fore.WHITE, self.entity_index)  # noqa:E501
+        self.entity_display_map[str(self.entity_index)] = forest.get_display_char()  # noqa:E501
+        self.entities.append(forest)  # noqa:E501
+        self.entity_index += 1
+
+    def add_random_desert(self):
+        random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
+        desert = Structure(f'desert_{self.entity_index}', '', StructuresEnum.desert, random_pos, Fore.YELLOW + 'D' + Fore.WHITE, self.entity_index)  # noqa:E501
+        self.entity_display_map[str(self.entity_index)] = desert.get_display_char()  # noqa:E501
+        self.entities.append(desert)  # noqa:E501
+        self.entity_index += 1
+
+    def add_random_river(self):
+        random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
+        river = Structure(f'river_{self.entity_index}', '', StructuresEnum.river, random_pos, Fore.BLUE + 'R' + Fore.WHITE, self.entity_index)  # noqa:E501
+        self.entity_display_map[str(self.entity_index)] = river.get_display_char()  # noqa:E501
+        self.entities.append(river)  # noqa:E501
+        self.entity_index += 1
+
+    def add_random_town(self):
+        random_pos = [random.randint(0, self.world_size[1] - 1), random.randint(0, self.world_size[0] - 1)]  # noqa:E501
+        town = Structure(f'town_{self.entity_index}', '', StructuresEnum.town, random_pos, Fore.CYAN + 'T' + Fore.WHITE, self.entity_index)  # noqa:E501
+        self.entity_display_map[str(self.entity_index)] = town.get_display_char()  # noqa:E501
+        self.entities.append(town)  # noqa:E501
         self.entity_index += 1
 
     def detect_world_bounds_collision(self, entity):
@@ -239,16 +287,16 @@ class World:
         return world_matrix
 
     def generate_world_display(self, world_matrix):
-        world_display = ''.join([' # ' for x in range(self.window_size[0] + 2)]) + '\n'  # noqa:E501
+        world_display = ''.join(['#  ' for x in range(self.window_size[0] + 2)]) + '\n'  # noqa:E501
 
         for y in range(len(world_matrix)):
             if y >= self.window_pos[1] and y < self.window_pos[1] + self.window_size[1]:  # noqa:E501
-                world_display += ' | '
+                world_display += '|'
                 for x in range(len(world_matrix[y])):
                     if x >= self.window_pos[0] and x < self.window_pos[0] + self.window_size[0]:  # noqa:E501
                         world_display += f' {self.entity_display_map[str(world_matrix[y][x])]} '  # noqa:E501
                 world_display += ' | \n'
-        world_display += ''.join([' # ' for x in range(self.window_size[0] + 2)])  # noqa:E501
+        world_display += ''.join(['#  ' for x in range(self.window_size[0] + 2)])  # noqa:E501
         return world_display
 
     def get_player(self):
@@ -275,6 +323,7 @@ class World:
                     print('#-DEBUG MODE-#')
                     print(player.get_position())
                     print(self.seed)
+                    print(" ")
                 self.detect_window_change(player)
 
             # Get view based on scene state
@@ -320,7 +369,7 @@ class Item:
 
 class Player(Entity):
     def __init__(self, position, health, stamina, matrix_index):
-        Entity.__init__(self, 'player', '\u024e', position, matrix_index)
+        Entity.__init__(self, 'player', '\u03a9', position, matrix_index)
         self.jso = JSONOps('db.json')
         db = self.jso.read()
         db['player']['health'] = health
@@ -334,7 +383,7 @@ class Player(Entity):
 
     def decrease_stamina(self, amount):
         db = self.jso.read()
-        db['player']['stamina'] -= amount
+        db['player']['stamina'] = db['player']['stamina'] - amount
         self.jso.write(db)
 
     def add_item(self, item: Item):
@@ -389,8 +438,12 @@ class Structure(Entity):
         db = self.jso.read()
         if structure_type == StructuresEnum.mountain:
             db[name] = db['templates']['mountain']
+        if structure_type == StructuresEnum.forest:
+            db[name] = db['templates']['forest']
         if structure_type == StructuresEnum.river:
             db[name] = db['templates']['river']
+        if structure_type == StructuresEnum.desert:
+            db[name] = db['templates']['desert']
         if structure_type == StructuresEnum.town:
             db[name] = db['templates']['town']
         self.jso.write(db)
