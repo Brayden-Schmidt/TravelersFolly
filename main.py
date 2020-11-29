@@ -155,7 +155,7 @@ class World:
                 random.seed(generated_seed)
             self.seed = generated_seed
             self.add_player()
-            # pg = proportional generation fg = final generation tg = town generation # noqa:E501
+            # pg = proportional generation, fg = final generation, tg = town generation # noqa:E501
             pg = 0
             fg = 0
             tg = 0
@@ -291,11 +291,11 @@ class World:
 
         for y in range(len(world_matrix)):
             if y >= self.window_pos[1] and y < self.window_pos[1] + self.window_size[1]:  # noqa:E501
-                world_display += '|'
+                world_display += '| '
                 for x in range(len(world_matrix[y])):
                     if x >= self.window_pos[0] and x < self.window_pos[0] + self.window_size[0]:  # noqa:E501
                         world_display += f' {self.entity_display_map[str(world_matrix[y][x])]} '  # noqa:E501
-                world_display += ' | \n'
+                world_display += ' |\n'
         world_display += ''.join(['#  ' for x in range(self.window_size[0] + 2)])  # noqa:E501
         return world_display
 
@@ -320,7 +320,7 @@ class World:
             player = self.get_player()
             if player:
                 if self.debug:
-                    print('#-DEBUG MODE-#')
+                    print(Fore.LIGHTMAGENTA_EX + 'DEBUG MODE' + Fore.WHITE)
                     print(player.get_position())
                     print(self.seed)
                     print(" ")
